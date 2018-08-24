@@ -4,25 +4,30 @@
 	var socket = io('http://'+window.location.host);
 	socket.emit('join', '<%- sala %>');
 	socket.on('send-client', function (msg) {
-		document.getElementById('chat').innerHTML += msg;
+		var chat = document.getElementById('chat');
+		chat.innerHTML += msg;
+		chat.scrollTop = chat.scrollHeight;
 	});
+
 	var enviar = function() {
-		console.log(window.location.host);
+		
 		var msg = document.getElementById('msg');
-		socket.emit('send-server', msg.value);
-		document.getElementById('msg').value='';
+		if(msg.value!=null && msg.value!='' && msg.value!= undefined){
+			socket.emit('send-server', msg.value);
+			document.getElementById('msg').value='';
+		}
 	};
 
-	var input = document.getElementById("msg")
-	input.addEventListener("keyup", function(event) {
-	// Cancel the default action, if needed
-	event.preventDefault();
-	// Number 13 is the "Enter" key on the keyboard
-	if (event.keyCode === 13) {
- 	// Trigger the button element with a click
- 	document.getElementById("subBtn").click();
+	
+	document.onkeyup=function(e){
+
+		if(e.which == 13){
+
+			document.getElementById('subBtn').click();
+		}
+
 	}
-	});
+
 
 </script>
 <header class="row-fluid text-center">

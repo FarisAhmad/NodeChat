@@ -15,6 +15,13 @@ var express = require('express')
 ;
 
 
+var mongoDB = 'mongodb://127.0.0.1:27017/ntalk';
+mongoose.connect(mongoDB,{ useNewUrlParser: true });
+
+global.db = mongoose.connection;
+
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+
 /*global.db = mongoose.connect('mongodb://localhost:27017/ntalk', function(error){
     if(error) console.log(error);
 

@@ -1,14 +1,14 @@
 module.exports = function(app) {
-	var mongoose = require('mongoose');
-	var contato = mongoose.Schema({
+	var Schema = require('mongoose').Schema;
+	var contato = Schema({
 		nome: String
 		, email: String
 	});
-	var usuario = mongoose.Schema({
+	var usuario = Schema({
 		nome: {type: String, required: true}
 		, email: {type: String, required: true
 			, index: {unique: true}}
 			, contatos: [contato]
 		});
-	return mongoose.model('usuarios', usuario);
+	return db.model('usuarios', usuario);
 };

@@ -1,17 +1,28 @@
 <% include ../header %>
 <script src="/socket.io/socket.io.js"></script>
 <script>
-	var socket = io('http://localhost:3000');
+	var socket = io('http://'+window.location.host);
 	socket.emit('join', '<%- sala %>');
 	socket.on('send-client', function (msg) {
 		document.getElementById('chat').innerHTML += msg;
 	});
 	var enviar = function() {
+		console.log(window.location.host);
 		var msg = document.getElementById('msg');
 		socket.emit('send-server', msg.value);
 		document.getElementById('msg').value='';
 	};
 
+	var input = document.getElementById("msg")
+	input.addEventListener("keyup", function(event) {
+	// Cancel the default action, if needed
+	event.preventDefault();
+	// Number 13 is the "Enter" key on the keyboard
+	if (event.keyCode === 13) {
+ 	// Trigger the button element with a click
+ 	document.getElementById("subBtn").click();
+	}
+	});
 
 </script>
 <header class="row-fluid text-center">
@@ -22,7 +33,7 @@
 		<pre id="chat" class="pre-scrollable" style="width:auto;height:250px;"></pre>
 		<div class="input-append">
 			<input type="text" id="msg" class="input-xlarge" placeholder="Digite sua mensagem">
-			<button class="btn btn-success" id="subBtn"onclick="enviar();">Enviar</button>
+			<button class="btn btn-success" id="subBtn" onclick="enviar();">Enviar</button>
 			<a href="/contatos" class="btn btn-inverse">Sair do chat</a>
 		</div>
 	</div>

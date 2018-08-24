@@ -11,7 +11,15 @@ var express = require('express')
 , io = require('socket.io')(server)
 , cookie = cookieParser(SECRET)
 , store = new expressSession.MemoryStore()
+, mongoose = require('mongoose')
 ;
+
+
+/*global.db = mongoose.connect('mongodb://localhost:27017/ntalk', function(error){
+    if(error) console.log(error);
+
+        console.log("connection successful");
+});*/
 
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');

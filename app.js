@@ -1,32 +1,31 @@
-const KEY = 'ntalk.sid', SECRET = 'ntalk';
-var express = require('express')
-, load = require('express-load')
-, bodyParser = require('body-parser')
-, cookieParser = require('cookie-parser')
-, expressSession = require('express-session')
-, methodOverride = require('method-override')
-, error = require('./middlewares/error')
-, app = express()
-, server = require('http').Server(app)
-, io = require('socket.io')(server)
-, cookie = cookieParser(SECRET)
-, store = new expressSession.MemoryStore()
-, mongoose = require('mongoose')
-;
+const express = require('express');
+const load = require('express-load');
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const expressSession = require('express-session');
+const methodOverride = require('method-override');
+const mongoose = require('mongoose');
 
+const error = require('./middlewares/error');
 
-var mongoDB = 'mongodb://127.0.0.1:27017/ntalk';
-mongoose.connect(mongoDB,{ useNewUrlParser: true });
+const KEY = 'ntalk.sid';
+const SECRET = 'ntalk';
+const MONGODB = 'mongodb://127.0.0.1:27017/ntalk';
+const PORT = 3000;
+const HOSTNAME = '127.0.0.1';
+
+const app = express();
+const cookie = cookieParser(SECRET);
+const store = new expressSession.MemoryStore();
+
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
+
+mongoose.connect(MONGODB, { useNewUrlParser: true });
 
 global.db = mongoose.connection;
 
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-
-/*global.db = mongoose.connect('mongodb://localhost:27017/ntalk', function(error){
-    if(error) console.log(error);
-
-        console.log("connection successful");
-});*/
 
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
@@ -39,12 +38,15 @@ app.use(expressSession({
 	saveUninitialized: true,
 	store: store
 }));
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(methodOverride('_method'));
 app.use(express.static(__dirname + '/public'));
+
 io.use(function(socket, next) {
-	var data = socket.request;
+	let data = socket.request;
+
 	cookie(data, {}, function(err) {
 		var sessionID = data.signedCookies[KEY];
 		store.get(sessionID, function(err, session) {
@@ -59,18 +61,20 @@ io.use(function(socket, next) {
 });
 
 load('models')
-.then('controllers')
-.then('routes')
-.into(app);
+	.then('controllers')
+	.then('routes')
+	.into(app);
 
 load('sockets')
-.into(io);
+	.into(io);
 
-// middleware de tratamento erros
 app.use(error.notFound);
 app.use(error.serverError);
 
-
-server.listen(3000,'0.0.0.0', function(){
-	console.log("Ntalk no ar.");
+server.listen(PORT, HOSTNAME, function(err) {
+	if (err) {
+		console.error(err);
+	} else {
+		console.log(`[${HOSTNAME}] Ntalk listening to port: ${PORT}`);
+	}
 });

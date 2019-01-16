@@ -52,7 +52,7 @@ io.use(function(socket, next) {
 
 		store.get(sessionID, function(err, session) {
 			if (err || !session) {
-				return next(new Error('acesso negado'));
+				return next(new Error('Denied access'));
 			} else {
 				socket.handshake.session = session;
 				return next();

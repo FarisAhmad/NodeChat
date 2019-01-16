@@ -1,7 +1,9 @@
 {
   "name": "ntalk",
-  "version": "0.0.0",
   "private": false,
+  "scripts": {
+    "start": "node app.js"
+  },
   "dependencies": {
     "cookie-parser": "~1.4.3",
     "ejs": "~2.6.0",

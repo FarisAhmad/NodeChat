@@ -48,7 +48,8 @@ io.use(function(socket, next) {
 	let data = socket.request;
 
 	cookie(data, {}, function(err) {
-		var sessionID = data.signedCookies[KEY];
+		let sessionID = data.signedCookies[KEY];
+
 		store.get(sessionID, function(err, session) {
 			if (err || !session) {
 				return next(new Error('acesso negado'));

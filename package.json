@@ -1,18 +1,24 @@
 {
-  "name": "ntalk",
+  "name": "node-chat",
+  "description": "WebChat feito em Nodejs usando WebSockets",
   "private": false,
+  "author": {
+    "name": "Faris Saleh",
+    "email": "faris.s.ahmad@gmail.com"
+  },
   "scripts": {
     "start": "node app.js"
   },
   "dependencies": {
     "cookie-parser": "~1.4.3",
+    "dotenv": "^8.2.0",
     "ejs": "~2.6.0",
     "express": "~4.16.0",
     "express-load": "^1.1.16",
     "express-session": "^1.15.6",
     "http-errors": "~1.7.0",
     "method-override": "^3.0.0",
-    "mongoose": "^5.2.9",
+    "mongoose": "^5.8.0",
     "redis": "~0.11.0",
     "socket.io": "^2.1.1"
   }

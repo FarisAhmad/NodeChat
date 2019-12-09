@@ -1,17 +1,29 @@
 <% include ../header %>
-<header class="row-fluid text-center">>
-	<h2>Ntalk - Editar contato</h2>
+<header class="row-fluid text-center">
+  >
+  <h2>Ntalk - Editar contato</h2>
 </header>
 <section class="row-fluid text-center">
-	<form action="/contato/<%- contato._id %>?_method=put" method="post" class="well form-inline">
-		<label>Nome:</label>
-		<input type="text" name="contato[nome]"
-		value="<%- contato.nome %>" class="input-medium">
-		<label>E-mail:</label>
-		<input type="text" name="contato[email]"
-		value="<%- contato.email %>" class="input-medium">
-		<button type="submit" class="btn btn-primary">Atualizar</button>
-	</form>
+  <form
+    action="/contato/<%- contato._id %>?_method=put"
+    method="post"
+    class="well form-inline"
+  >
+    <label>Nome:</label>
+    <input
+      type="text"
+      name="contato[nome]"
+      value="<%- contato.nome %>"
+      class="input-medium"
+    />
+    <label>E-mail:</label>
+    <input
+      type="text"
+      name="contato[email]"
+      value="<%- contato.email %>"
+      class="input-medium"
+    />
+    <button type="submit" class="btn btn-primary">Atualizar</button>
+  </form>
 </section>
-<% include ../exit %>
-<% include ../footer %>
+<% include ../exit %> <% include ../footer %>

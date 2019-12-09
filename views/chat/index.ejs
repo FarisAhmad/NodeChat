@@ -1,47 +1,50 @@
 <% include ../header %>
 <script src="/socket.io/socket.io.js"></script>
 <script>
-	var socket = io('http://'+window.location.host);
-	socket.emit('join', '<%- sala %>');
-	socket.on('send-client', function (msg) {
-		var chat = document.getElementById('chat');
-		chat.innerHTML += msg;
-		chat.scrollTop = chat.scrollHeight;
-	});
+  var socket = io('http://' + window.location.host);
+  socket.emit('join', '<%- sala %>');
+  socket.on('send-client', function(msg) {
+    var chat = document.getElementById('chat');
+    chat.innerHTML += msg;
+    chat.scrollTop = chat.scrollHeight;
+  });
 
-	var enviar = function() {
-		
-		var msg = document.getElementById('msg');
-		if(msg.value!=null && msg.value!='' && msg.value!= undefined){
-			socket.emit('send-server', msg.value);
-			document.getElementById('msg').value='';
-		}
-	};
+  var enviar = function() {
+    var msg = document.getElementById('msg');
+    if (msg.value != null && msg.value != '' && msg.value != undefined) {
+      socket.emit('send-server', msg.value);
+      document.getElementById('msg').value = '';
+    }
+  };
 
-	
-	document.onkeyup=function(e){
-
-		if(e.which == 13){
-
-			document.getElementById('subBtn').click();
-		}
-
-	}
-
-
+  document.onkeyup = function(e) {
+    if (e.which == 13) {
+      document.getElementById('subBtn').click();
+    }
+  };
 </script>
 <header class="row-fluid text-center">
-	<h2>Ntalk - Chat</h2>
+  <h2>Ntalk - Chat</h2>
 </header>
 <section class="row-fluid">
-	<div class="well span6 offset3">
-		<pre id="chat" class="pre-scrollable" style="width:auto;height:250px;"></pre>
-		<div class="input-append">
-			<input type="text" id="msg" class="input-xlarge" placeholder="Digite sua mensagem">
-			<button class="btn btn-success" id="subBtn" onclick="enviar();">Enviar</button>
-			<a href="/contatos" class="btn btn-inverse">Sair do chat</a>
-		</div>
-	</div>
+  <div class="well span6 offset3">
+    <pre
+      id="chat"
+      class="pre-scrollable"
+      style="width:auto;height:250px;"
+    ></pre>
+    <div class="input-append">
+      <input
+        type="text"
+        id="msg"
+        class="input-xlarge"
+        placeholder="Digite sua mensagem"
+      />
+      <button class="btn btn-success" id="subBtn" onclick="enviar();">
+        Enviar
+      </button>
+      <a href="/contatos" class="btn btn-inverse">Sair do chat</a>
+    </div>
+  </div>
 </section>
-<% include ../exit %>
-<% include ../footer %>
+<% include ../exit %> <% include ../footer %>
